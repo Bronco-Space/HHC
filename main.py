@@ -39,7 +39,10 @@ def decrement_z():
     z_pwm -= step
     z_txt.set(z_pwm)
 
-font = tkFont.Font(family="Arial", size=50)
+def stop():
+    pass
+
+font = tkFont.Font(family="Arial", size=100)
 
 x_inc = tk.Button(root, text="x+", command=increment_x, font=font)
 x_inc.grid(row=1, column=1)
@@ -67,5 +70,8 @@ z_label = tk.Label(root, textvariable=z_txt, font=font)
 z_label.grid(row=2,column=3)
 z_dec = tk.Button(root, text="z-", command=decrement_z, font=font)
 z_dec.grid(row=3, column=3)
+
+stop = tk.Button(root, text="STOP", command=stop, font=font)
+stop.grid(row=2, column=4)
 
 root.mainloop()
