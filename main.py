@@ -31,11 +31,8 @@ c = IO.PWM(z_pin, maxFreq)
 
 #generating/initializing the PWM signal for each axis, starting with 0% duty cycle
 a.start(0)
-a.ChangeDutyCycle(0)
 b.start(0)
-b.ChangeDutyCycle(0)
 c.start(0)
-c.ChangeDutyCycle(0)
 
 x_pwm = 0
 y_pwm = 0
@@ -165,6 +162,6 @@ z_dec.grid(row=3, column=3)
 stop = tk.Button(root, text="STOP", command=stop, font=font)
 stop.grid(row=2, column=4)
 
-root.mainloop()
+#root.mainloop()
 
 IO.cleanup()
