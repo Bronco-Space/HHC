@@ -11,7 +11,7 @@ y_dir_pin = 16
 z_dir_pin = 6
 maxFreq = 20 #measured in hertz
 maxCurrent = 10 #AMPs?
-scaleDC = 1
+scaleDC = 10
 
 IO.setmode(IO.BCM) # this just makes it so pin numbers are by the BCM pin nums so 'GPIO19' instead of pin 35
 
@@ -31,8 +31,11 @@ c = IO.PWM(z_pin, maxFreq)
 
 #generating/initializing the PWM signal for each axis, starting with 0% duty cycle
 a.start(0)
+a.ChangeDutyCycle(0)
 b.start(0)
+b.ChangeDutyCycle(0)
 c.start(0)
+c.ChangeDutyCycle(0)
 
 x_pwm = 0
 y_pwm = 0
@@ -114,6 +117,7 @@ def dutyCycleChange():
     a.ChangeDutyCycle(abs(x_pwm))
     b.ChangeDutyCycle(abs(y_pwm))
     c.ChangeDutyCycle(abs(z_pwm))
+    printMags(x_pwm,y_pwm,z_pwm)
     if x_pwm<0:
         IO.output(x_dir_pin, True)
     else:
