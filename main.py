@@ -46,35 +46,40 @@ def increment_x():
     global x_pwm
     if x_pwm < 10:
         x_pwm += step
-        x_txt.set(x_pwm)
+
+    dutyCycleChange()
 
 def decrement_x():
     global x_pwm
 
     if x_pwm > -10:
         x_pwm -= step
-        x_txt.set(x_pwm)
+
+    dutyCycleChange()
 
 def increment_y():
     global y_pwm
 
     if y_pwm < 10:
         y_pwm += step
-        y_txt.set(y_pwm)
+
+    dutyCycleChange()
 
 def decrement_y():
     global y_pwm
 
     if y_pwm > -10:
         y_pwm -= step
-        y_txt.set(y_pwm)
+
+    dutyCycleChange()
 
 def increment_z():
     global z_pwm
 
     if z_pwm < 10:
         z_pwm += step
-        z_txt.set(z_pwm)
+
+    dutyCycleChange()
 
 def decrement_z():
     global z_pwm
@@ -82,6 +87,8 @@ def decrement_z():
     if z_pwm > -10:
         z_pwm -= step
         z_txt.set(z_pwm)
+    
+    dutyCycleChange()
 
 def calcDC(current):
     # FOR TESTING MAY WANT TO SCALE DOWN DUTY CYCLE at first
@@ -93,10 +100,10 @@ def calcDC(current):
 
 def stop():
     global x_pwm, y_pwm, z_pwm
-    resetDutyCycles()
     x_pwm=0
     y_pwm=0
     z_pwm=0
+    dutyCycleChange()
 
 def resetDutyCycles():
     global a,b,c
@@ -106,7 +113,13 @@ def resetDutyCycles():
 
 
 def dutyCycleChange():
+    print("updating")
     global a,b,c,x_pwm,y_pwm,z_pwm
+    
+    x_txt.set(x_pwm)
+    y_txt.set(y_pwm)
+    z_txt.set(z_pwm)
+
     a.ChangeDutyCycle(calcDC(x_pwm))
     b.ChangeDutyCycle(calcDC(y_pwm))
     c.ChangeDutyCycle(calcDC(z_pwm))
