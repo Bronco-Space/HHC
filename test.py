@@ -124,4 +124,3 @@ def dutyCycleChange():
     else:
         IO.output(z_dir_pin, False)
 
-IO.cleanup()
