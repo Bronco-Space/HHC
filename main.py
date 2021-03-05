@@ -6,9 +6,9 @@ import RPi.GPIO as IO
 x_pin = 19
 y_pin = 20
 z_pin = 21
-maxFreq = 1000 #measured in hertz
+maxFreq = 20000 #measured in hertz
 maxCurrent = 10 #AMPs?
-scaleDC = 0x7FFFF
+scaleDC = 1
 
 IO.setmode(IO.BCM) # this just makes it so pin numbers are by the BCM pin nums so 'GPIO19' instead of pin 35
 
@@ -18,9 +18,9 @@ IO.setup(y_pin, IO.OUT)
 IO.setup(z_pin, IO.OUT)
 
 #setting up the output pins as pwm output, and the max frequency
-a = IO.PWM(x_pin, IO.OUT)
-b = IO.PWM(y_pin, IO.OUT)
-c = IO.PWM(z_pin, IO.OUT)
+a = IO.PWM(x_pin, maxFreq)
+b = IO.PWM(y_pin, maxFreq)
+c = IO.PWM(z_pin, maxFreq)
 
 #generating/initializing the PWM signal for each axis, starting with 0% duty cycle
 a.start(0)
