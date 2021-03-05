@@ -162,3 +162,5 @@ stop = tk.Button(root, text="STOP", command=stop, font=font)
 stop.grid(row=2, column=4)
 
 root.mainloop()
+
+IO.cleanup()
