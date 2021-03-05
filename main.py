@@ -44,42 +44,42 @@ root = tk.Tk()
 
 def increment_x():
     global x_pwm
-    if x_pwm <= 10 and x_pwm >= -10:     
+    if x_pwm < 10:     
         x_pwm += step
         x_txt.set(x_pwm)
 
 def decrement_x():
     global x_pwm
 
-    if x_pwm <= 10 and x_pwm >= -10:
+    if x_pwm > -10:
         x_pwm -= step
         x_txt.set(x_pwm)
 
 def increment_y():
     global y_pwm
 
-    if y_pwm <= 10 and y_pwm >= -10:
+    if y_pwm < 10:
         y_pwm += step
         y_txt.set(y_pwm)
 
 def decrement_y():
     global y_pwm
 
-    if y_pwm <= 10 and y_pwm >= -10:
+    if y_pwm > -10:
         y_pwm -= step
         y_txt.set(y_pwm)
 
 def increment_z():
     global z_pwm
 
-    if z_pwm <= 10 and z_pwm >= -10:
+    if z_pwm < 10:
         z_pwm += step
         z_txt.set(z_pwm)
 
 def decrement_z():
     global z_pwm
 
-    if z_pwm <= 10 and z_pwm >= -10:
+    if z_pwm > -10:
         z_pwm -= step
         z_txt.set(z_pwm)
 
