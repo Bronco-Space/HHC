@@ -6,6 +6,9 @@ import RPi.GPIO as IO
 x_pin = 19
 y_pin = 20
 z_pin = 21
+x_dir_pin = 26
+y_dir_pin = 16
+z_dir_pin = 6
 maxFreq = 20000 #measured in hertz
 maxCurrent = 10 #AMPs?
 scaleDC = 1
@@ -16,6 +19,10 @@ IO.setmode(IO.BCM) # this just makes it so pin numbers are by the BCM pin nums s
 IO.setup(x_pin, IO.OUT) 
 IO.setup(y_pin, IO.OUT)
 IO.setup(z_pin, IO.OUT)
+
+IO.setup(x_dir_pin, IO.OUT) 
+IO.setup(y_dir_pin, IO.OUT)
+IO.setup(z_dir_pin, IO.OUT)
 
 #setting up the output pins as pwm output, and the max frequency
 a = IO.PWM(x_pin, maxFreq)
@@ -58,7 +65,7 @@ def increment_y():
 def decrement_y():
     global y_pwm
 
-    if x <= 10 and x >= -10:
+    if y_pwm <= 10 and y_pwm >= -10:
         y_pwm -= step
         y_txt.set(y_pwm)
 
@@ -104,10 +111,23 @@ def printMags(x, y, z):
 
 def dutyCycleChange():
     global a,b,c,x_pwm,y_pwm,z_pwm
-    a.ChangeDutyCycle(x_pwm)
-    b.ChangeDutyCycle(y_pwm)
-    c.ChangeDutyCycle(z_pwm)
+    a.ChangeDutyCycle(abs(x_pwm))
+    b.ChangeDutyCycle(abs(y_pwm))
+    c.ChangeDutyCycle(abs(z_pwm))
+    if x_pwm<0:
+        IO.output(x_dir_pin, True)
+    else:
+        IO.output(x_dir_pin, False)
+    
+    if y_pwm<0:
+        IO.output(y_dir_pin, True)
+    else:
+        IO.output(y_dir_pin, False)
 
+    if z_pwm<0:
+        IO.output(z_dir_pin, True)
+    else:
+        IO.output(z_dir_pin, False)
 
 font = tkFont.Font(family="Arial", size=100)
 
