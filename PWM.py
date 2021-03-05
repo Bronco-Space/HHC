@@ -4,9 +4,8 @@ import RPi.GPIO as IO
 x_pin = 19
 y_pin = 20
 z_pin = 21
-maxFreq = 1000 #measured in hertz
-maxCurrent = 100 #AMPs?
-scaleDC = 0x7FFFF
+maxCurrent = 100
+scaleDC = 0x00001
 
 IO.setmode(IO.BCM) # this just makes it so pin numbers are by the BCM pin nums so 'GPIO19' instead of pin 35
 
