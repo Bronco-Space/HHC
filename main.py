@@ -44,7 +44,7 @@ root = tk.Tk()
 
 def increment_x():
     global x_pwm
-    if x_pwm < 10:     
+    if x_pwm < 10:
         x_pwm += step
         x_txt.set(x_pwm)
 
@@ -85,6 +85,7 @@ def decrement_z():
 
 def calcDC(current):
     # FOR TESTING MAY WANT TO SCALE DOWN DUTY CYCLE at first
+    current = abs(current)
     if current > maxCurrent:
         return scaleDC
     else:
@@ -103,18 +104,12 @@ def resetDutyCycles():
     b.ChangeDutyCycle(0)
     c.ChangeDutyCycle(0)
 
-def printMags(x, y, z):
-    print('MAGS VALUES:')
-    print('x: ' + calcDC(x))
-    print('y: ' + calcDC(y))
-    print('z: ' + calcDC(z))
 
 def dutyCycleChange():
     global a,b,c,x_pwm,y_pwm,z_pwm
-    a.ChangeDutyCycle(abs(x_pwm))
-    b.ChangeDutyCycle(abs(y_pwm))
-    c.ChangeDutyCycle(abs(z_pwm))
-    printMags(x_pwm,y_pwm,z_pwm)
+    a.ChangeDutyCycle(calcDC(x_pwm))
+    b.ChangeDutyCycle(calcDC(y_pwm))
+    c.ChangeDutyCycle(calcDC(z_pwm))
     if x_pwm<0:
         IO.output(x_dir_pin, True)
     else:
@@ -129,6 +124,7 @@ def dutyCycleChange():
         IO.output(z_dir_pin, True)
     else:
         IO.output(z_dir_pin, False)
+
 
 font = tkFont.Font(family="Arial", size=100)
 
@@ -164,4 +160,5 @@ stop.grid(row=2, column=4)
 
 root.mainloop()
 
+print("exiting")
 IO.cleanup()
