@@ -9,7 +9,7 @@ z_pin = 21
 x_dir_pin = 26
 y_dir_pin = 16
 z_dir_pin = 6
-maxFreq = 20000 #measured in hertz
+maxFreq = 20 #measured in hertz
 maxCurrent = 10 #AMPs?
 scaleDC = 1
 
