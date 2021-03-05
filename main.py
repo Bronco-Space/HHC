@@ -1,9 +1,35 @@
 import tkinter as tk
 import tkinter.font as tkFont
+import RPi.GPIO as IO
 
-x_pwm = 1
-y_pwm = 1
-z_pwm = 1
+#pin locations, the BCM pin numbers
+x_pin = 19
+y_pin = 20
+z_pin = 21
+maxFreq = 1000 #measured in hertz
+maxCurrent = 10 #AMPs?
+scaleDC = 0x7FFFF
+
+IO.setmode(IO.BCM) # this just makes it so pin numbers are by the BCM pin nums so 'GPIO19' instead of pin 35
+
+#initializing the output pins
+IO.setup(x_pin, IO.OUT) 
+IO.setup(y_pin, IO.OUT)
+IO.setup(z_pin, IO.OUT)
+
+#setting up the output pins as pwm output, and the max frequency
+a = IO.PWM(x_pin, IO.OUT)
+b = IO.PWM(y_pin, IO.OUT)
+c = IO.PWM(z_pin, IO.OUT)
+
+#generating/initializing the PWM signal for each axis, starting with 0% duty cycle
+a.start(0)
+b.start(0)
+c.start(0)
+
+x_pwm = 0
+y_pwm = 0
+z_pwm = 0
 
 step = 1
 
@@ -11,36 +37,77 @@ root = tk.Tk()
 
 def increment_x():
     global x_pwm
-    x_pwm += step
-    x_txt.set(x_pwm)
+    if x_pwm <= 10 and x_pwm >= -10:     
+        x_pwm += step
+        x_txt.set(x_pwm)
 
 def decrement_x():
     global x_pwm
-    x_pwm -= step
-    x_txt.set(x_pwm)
+
+    if x_pwm <= 10 and x_pwm >= -10:
+        x_pwm -= step
+        x_txt.set(x_pwm)
 
 def increment_y():
     global y_pwm
-    y_pwm += step
-    y_txt.set(y_pwm)
+
+    if y_pwm <= 10 and y_pwm >= -10:
+        y_pwm += step
+        y_txt.set(y_pwm)
 
 def decrement_y():
     global y_pwm
-    y_pwm -= step
-    y_txt.set(y_pwm)
+
+    if x <= 10 and x >= -10:
+        y_pwm -= step
+        y_txt.set(y_pwm)
 
 def increment_z():
-    global y_pwm
-    y_pwm += step
-    y_txt.set(y_pwm)
+    global z_pwm
+
+    if z_pwm <= 10 and z_pwm >= -10:
+        z_pwm += step
+        z_txt.set(z_pwm)
 
 def decrement_z():
     global z_pwm
-    z_pwm -= step
-    z_txt.set(z_pwm)
+
+    if z_pwm <= 10 and z_pwm >= -10:
+        z_pwm -= step
+        z_txt.set(z_pwm)
+
+def calcDC(current):
+    # FOR TESTING MAY WANT TO SCALE DOWN DUTY CYCLE at first
+    if current > maxCurrent:
+        return scaleDC
+    else:
+        return current / maxCurrent * scaleDC
 
 def stop():
-    pass
+    global x_pwm, y_pwm, z_pwm
+    resetDutyCycles()
+    x_pwm=0
+    y_pwm=0
+    z_pwm=0
+
+def resetDutyCycles():
+    global a,b,c
+    a.ChangeDutyCycle(0)
+    b.ChangeDutyCycle(0)
+    c.ChangeDutyCycle(0)
+
+def printMags(x, y, z):
+    print('MAGS VALUES:')
+    print('x: ' + calcDC(x))
+    print('y: ' + calcDC(y))
+    print('z: ' + calcDC(z))
+
+def dutyCycleChange():
+    global a,b,c,x_pwm,y_pwm,z_pwm
+    a.ChangeDutyCycle(x_pwm)
+    b.ChangeDutyCycle(y_pwm)
+    c.ChangeDutyCycle(z_pwm)
+
 
 font = tkFont.Font(family="Arial", size=100)
 
