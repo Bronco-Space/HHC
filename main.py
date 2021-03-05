@@ -11,7 +11,7 @@ y_dir_pin = 16
 z_dir_pin = 6
 maxFreq = 20 #measured in hertz
 maxCurrent = 10 #AMPs?
-scaleDC = 10
+scaleDC = 100
 
 IO.setmode(IO.BCM) # this just makes it so pin numbers are by the BCM pin nums so 'GPIO19' instead of pin 35
 
